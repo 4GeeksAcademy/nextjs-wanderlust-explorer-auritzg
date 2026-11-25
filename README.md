@@ -1,0 +1,1 @@
+# spain-aie-pt-6-auritzg-wanderlust-explorer
