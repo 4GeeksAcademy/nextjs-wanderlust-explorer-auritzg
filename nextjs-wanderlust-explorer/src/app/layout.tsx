@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 
@@ -17,7 +18,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="es" className={`${geistSans.variable} h-full antialiased`}>
       <body className="min-h-full">
-        <Navbar />
+        <Suspense>
+          <Navbar />
+        </Suspense>
         {children}
       </body>
     </html>

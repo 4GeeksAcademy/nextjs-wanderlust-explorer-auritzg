@@ -22,7 +22,10 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-1 md:flex">
           {links.map((link) => {
-            const active = pathname === link.href;
+            // For nested routes like /experiences/123, match the parent
+            const active = link.href === "/"
+              ? pathname === "/"
+              : pathname === link.href || pathname.startsWith(link.href + "/");
 
             return (
               <Link

@@ -1,7 +1,11 @@
+"use client";
+
+import { experiences } from "@/data/experiences";
 import DestinationCard from "@/components/DestinationCard";
 import ExperienceCard from "@/components/ExperienceCard";
 import HeroSearch from "@/components/HeroSearch";
 import ValueBand from "@/components/ValueBand";
+import { useFavorites } from "@/hooks/useFavorites";
 
 const destinations = [
   { name: "Roma", count: 18, imageUrl: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=700&q=80" },
@@ -10,13 +14,12 @@ const destinations = [
   { name: "Lisboa", count: 21, imageUrl: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=700&q=80" },
 ];
 
-const experiences = [
-  { id: 1, title: "Descubre la Costa Amalfitana", destination: "Napoles, Italia", price: 89, rating: 4.8, imageUrl: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=900&q=80" },
-  { id: 2, title: "Taller de cocina tradicional", destination: "Roma, Italia", price: 54, rating: 4.7, imageUrl: "https://images.unsplash.com/photo-1556761223-4c4282c73f77?auto=format&fit=crop&w=900&q=80" },
-  { id: 3, title: "Amanecer en las Dolomitas", destination: "Bolzano, Italia", price: 126, rating: 4.9, imageUrl: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80" },
-];
+// Pick 6 recommended experiences (first 6 from the dataset)
+const recommended = experiences.slice(0, 6);
 
 export default function Home() {
+  const { favorites, toggleFavorite } = useFavorites();
+
   return (
     <main>
       <HeroSearch />
@@ -35,8 +38,18 @@ export default function Home() {
         <p className="text-sm font-black uppercase text-[#ff5b45]">Ideas para tu viaje</p>
         <h2 className="mt-2 text-3xl font-black text-[#263238]">Experiencias recomendadas</h2>
         <div className="mt-7 grid gap-5 md:grid-cols-3">
-          {experiences.map((experience) => (
-            <ExperienceCard key={experience.id} {...experience} />
+          {recommended.map((exp) => (
+            <ExperienceCard
+              key={exp.id}
+              id={exp.id}
+              title={exp.title}
+              destination={exp.destination}
+              price={exp.price}
+              rating={exp.rating}
+              imageUrl={exp.imageUrl}
+              favorite={favorites.has(exp.id)}
+              onFavoriteChange={toggleFavorite}
+            />
           ))}
         </div>
       </section>
